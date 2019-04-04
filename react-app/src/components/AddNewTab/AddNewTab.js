@@ -1,7 +1,7 @@
 import React from "react"
 import "./AddNewTab.css"
 import { connect } from "react-redux"
-import { updateNewTaskValue, createTask } from "../../redux"
+import { updateNewTabValue, createTask } from "../../redux"
 
 const AddNewTab = (props) => {
   const preHandleSubmit = (event) => {
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   // methods passed into prop || : || methods retrieved from imported actions
-  handleChange: (value) => dispatch(updateNewTaskValue(value)),
+  handleChange: (value) => dispatch(updateNewTabValue(value)),
   handleSubmit: () => dispatch(createTask())
 })
 

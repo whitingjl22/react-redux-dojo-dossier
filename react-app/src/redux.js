@@ -12,8 +12,8 @@ export const deleteTask = (id) => ({
   type: "DELETE_TASK", // <-- actigit `on.type
   id // <-- action.idx
 })
-export const updateNewTaskValue = (value) => ({
-  type: "UPDATE_NEW_TASK_VALUE",
+export const updateNewTabValue = (value) => ({
+  type: "UPDATE_NEW_TAB_VALUE",
   value
 })
 export const resetNewTaskValue = () => ({
@@ -60,7 +60,7 @@ export const reducers = (state = initialState, action) => {
       console.log(" -- REDUCER -- RESET_NEW_TASK_VALUE | action", action)
       return { ...state, newTaskValue: "" }
 
-    case "UPDATE_NEW_TASK_VALUE":
+    case "UPDATE_NEW_TAB_VALUE":
       console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
       console.log(" -- REDUCER -- UPDATE_NEW_TASK_VALUE | state: ", state)
       console.log(" -- REDUCER -- UPDATE_NEW_TASK_VALUE | action: ", action)
