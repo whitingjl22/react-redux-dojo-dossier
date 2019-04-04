@@ -1,33 +1,43 @@
 import React from "react"
 import "./AddNewTab.css"
+import { connect } from "react-redux"
+import { updateNewTaskValue, createTask } from "../../redux"
 
-class AddNewTab extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      title: ""
-    }
+const AddNewTab = (props) => {
+  const preHandleSubmit = (event) => {
+    event.preventDefault()
+    props.handleSubmit()
   }
 
-  handleChange = (e) => {
-    console.log(`changing ${e.target.name}`)
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-  }
-
-  render() {
-    return (
-      <div className="addNewTabContainer">
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" name="title" placeholder="title" onChange={this.handleChange} value={this.state.title} />
-          <br />
-          <input type="submit" value="Add New Tab" />
-        </form>
-      </div>
-    )
-  }
+  return (
+    <div className="addNewTabContainer">
+      <form onSubmit={preHandleSubmit}>
+        <input
+          type="text"
+          name="title"
+          placeholder="title"
+          value={props.value}
+          onChange={(event) => props.handleChange(event.target.value)}
+        />
+        <br />
+        <input type="submit" value="Add New Tab" />
+      </form>
+    </div>
+  )
 }
 
-export default AddNewTab
+const mapStateToProps = (state) => ({
+  // variables passed into prop || : || variables retrieved from state parameter
+  value: state.newTaskValue
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  // methods passed into prop || : || methods retrieved from imported actions
+  handleChange: (value) => dispatch(updateNewTaskValue(value)),
+  handleSubmit: () => dispatch(createTask())
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddNewTab)

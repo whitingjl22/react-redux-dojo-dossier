@@ -1,0 +1,10 @@
+.addItemContainer {
+  margin-left: 200px;
+  margin-top: 300px;
+}
+
+.addItemContainer input {
+  width: 250px;
+  height: 11px;
+  margin: 10px;
+}
