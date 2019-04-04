@@ -40,8 +40,8 @@ export const reducers = (state = initialState, action) => {
       id++
       return {
         ...state,
-        tasks: [...state.tasks, { id, title: state.newTaskValue }],
-        newTaskValue: "" // reset input box
+        tasks: [...state.tasks, { id, title: state.newTabValue }],
+        newTabValue: "" // reset "Add New Tab" input box
       }
 
     case "DELETE_TASK":
@@ -66,7 +66,7 @@ export const reducers = (state = initialState, action) => {
       console.log(" -- REDUCER -- UPDATE_NEW_TASK_VALUE | action: ", action)
       console.log(" -- REDUCER -- UPDATE_NEW_TASK_VALUE | action.type: ", action.type)
       console.log(" -- REDUCER -- UPDATE_NEW_TASK_VALUE | action.value: ", action.value)
-      return { ...state, newTaskValue: action.value }
+      return { ...state, newTabValue: action.value }
 
     case "TOGGLE_COMPLETE_TASK":
       console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
@@ -93,7 +93,8 @@ const initialState = {
     { id: 2, title: "Jim", items: ["c", "d"] },
     { id: 3, title: "Gemma", items: ["e", "f"] }
   ],
-  newTaskValue: ""
+  newTabValue: "",
+  newItemValue: ""
 }
 
 // COMBINE ALL REDUCERS INTO 1 OBJECT

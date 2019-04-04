@@ -28,7 +28,7 @@ const AddNewTab = (props) => {
 
 const mapStateToProps = (state) => ({
   // variables passed into prop || : || variables retrieved from state parameter
-  value: state.newTaskValue
+  value: state.newTabValue
 })
 
 const mapDispatchToProps = (dispatch) => ({
