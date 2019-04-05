@@ -1,29 +1,26 @@
 import React from "react"
-
 import { connect } from "react-redux"
-
-// import { deleteTask, toggleCompleteTask } from "../../redux"
+import { viewProfile } from "../../redux"
+import DossierEntry from "../DossierEntry/DossierEntry"
+import "./TabList.css"
 
 const TabList = (props) => {
   // const TaskList = (props) => {
   // const tasks = props.tasks
 
-  console.log(props)
+  let dossiers = props.tasks.map((task, idx) => <DossierEntry task={task} key={idx} />)
+
+  console.log("tab list props: ", props)
   return (
-    <div>
-      {props.tasks.map((task, index) => (
+    <div className="tabListContainer">
+      {/* {props.tasks.map((task, index) => (
         <div style={{ display: "inline-block" }} key={index}>
           <ul>
-            <li style={{ display: "inline-block" }}>{task.title}</li>
+            <li>{task.title}</li>
           </ul>
-          {/* <button
-							onClick={() => {
-								toggleCompleteTask(task.id)
-							}}>
-							Mark Complete
-            </button> */}
         </div>
-      ))}
+			))} */}
+      <ul>{dossiers}</ul>
     </div>
   )
 }
@@ -33,8 +30,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  // destroyTask: (id) => dispatch(deleteTask(id)),
-  // toggleCompleteTask: (id) => dispatch(toggleCompleteTask(id))
+  viewProfile: (id) => dispatch(viewProfile(id))
 })
 
 export default connect(
