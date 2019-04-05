@@ -2,11 +2,12 @@ import React from "react"
 import "./AddNewTab.css"
 import { connect } from "react-redux"
 import { updateNewTabValue, createNewTab } from "../../redux"
+import axios from "axios"
 
 const AddNewTab = (props) => {
   const preHandleSubmit = (event) => {
     event.preventDefault()
-    props.handleSubmit()
+    props.postTabToServer(props.value)
   }
 
   return (
@@ -34,7 +35,13 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   // methods passed into prop || : || methods retrieved from imported actions
   handleChange: (value) => dispatch(updateNewTabValue(value)),
-  handleSubmit: () => dispatch(createNewTab())
+  handleSubmit: () => dispatch(createNewTab()),
+
+  postTabToServer: (value) => {
+    axios.post(`http://5c992ab94236560014393239.mockapi.io/tasks`, { title: value, items: [] }).then((response) => {
+      dispatch(createNewTab(response.data))
+    })
+  }
 })
 
 export default connect(

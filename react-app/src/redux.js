@@ -11,8 +11,6 @@ export const updateTasksList = (tasks) => ({
   tasks
 })
 
-
-
 export const createNewTab = () => ({
   type: "CREATE_NEW_TAB" // <-- action.type
 })
@@ -46,8 +44,6 @@ export const updateNewItemValue = (value) => ({
 // REDUCERS -- reducers.js
 export const reducers = (state = initialState, action) => {
   switch (action.type) {
-
-
     case "UPDATE_TASKS_LIST":
       console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
       console.log(" -- REDUCER -- UPDATE_TASKS_LIST | state: ", state)
@@ -64,7 +60,7 @@ export const reducers = (state = initialState, action) => {
       id++
       return {
         ...state,
-        tasks: [...state.tasks, { id, title: state.newTabValue, items:[] }],
+        tasks: [...state.tasks, { id, title: state.newTabValue, items: [] }],
         newTabValue: "" // reset "Add New Tab" input box
       }
 
@@ -73,33 +69,34 @@ export const reducers = (state = initialState, action) => {
       console.log(" -- REDUCER -- CREATE_NEW_ITEM | state: ", state)
       console.log(" -- REDUCER -- CREATE_NEW_ITEM | action", action)
       id++
-      console.log("PRE-CHANGE, state: ", state);
-      console.log("PRE-CHANGE, state.newItemValue: ", state.newItemValue);
-      let updatedObject;
+      console.log("PRE-CHANGE, state: ", state)
+      console.log("PRE-CHANGE, state.newItemValue: ", state.newItemValue)
+      let updatedObject
       return {
         ...state,
-        tasks: [ ...state.tasks.map( (task) => {
-          if ( task.id === state.profileToView.id){
-            updatedObject = { ...task, items: [...task.items, state.newItemValue]};
-            return { ...task, items: [...task.items, state.newItemValue]}
-          }
-          return task;
-        })],
+        tasks: [
+          ...state.tasks.map((task) => {
+            if (task.id === state.profileToView.id) {
+              updatedObject = { ...task, items: [...task.items, state.newItemValue] }
+              return { ...task, items: [...task.items, state.newItemValue] }
+            }
+            return task
+          })
+        ],
         newItemValue: "", // reset "Add New Item" input box
         profileToView: updatedObject
-
       }
-      
-      // return {
-      //   ...state,
-      //   tasks: [ ...state.tasks.map( (task) => {
-      //     if ( task.id === state.profileToView.id){
-      //       return { ...task, items: [...task.items, state.newItemValue]}
-      //     }
-      //     return task;
-      //   })],
-      //   newItemValue: "" // reset "Add New Item" input box
-      // }
+
+    // return {
+    //   ...state,
+    //   tasks: [ ...state.tasks.map( (task) => {
+    //     if ( task.id === state.profileToView.id){
+    //       return { ...task, items: [...task.items, state.newItemValue]}
+    //     }
+    //     return task;
+    //   })],
+    //   newItemValue: "" // reset "Add New Item" input box
+    // }
 
     case "VIEW_PROFILE":
       console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
@@ -110,7 +107,8 @@ export const reducers = (state = initialState, action) => {
       })
       return {
         ...state,
-        profileToView: Object.assign({}, state.tasks[profileIdx])
+        profileToView: Object.assign({}, state.tasks[profileIdx]),
+        idOfProfileToView: action.id
       }
 
     // case "DELETE_TASK":
@@ -172,6 +170,7 @@ const initialState = {
   ],
   newTabValue: "",
   newItemValue: "",
+  newItemId: null,
   profileToView: null
 }
 
