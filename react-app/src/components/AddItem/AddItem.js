@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { updateNewItemValue, createNewItem } from "../../redux"
 
 const AddItem = (props) => {
+  
   const preHandleSubmit = (event) => {
     event.preventDefault()
     props.handleSubmit()

@@ -12,14 +12,6 @@ const ItemsList = (props) => {
 
   return (
     <div>
-      {/* {props.profile.items.map((item, index) => (
-        <div key={index}>
-          <ul>
-            <li>{item}</li>
-          </ul>
-        </div>
-      ))} */}
-
       {props.profile !== null ? (
         <div className="profile">
           <li>{props.profile.items}</li>

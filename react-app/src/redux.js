@@ -5,6 +5,14 @@ import {
 
 // ACTIONS -- actions.js
 // Minimal representation of the change to the data
+// Retrieve Tasks from Server Action
+export const updateTasksList = (tasks) => ({
+  type: "UPDATE_TASKS_LIST",
+  tasks
+})
+
+
+
 export const createNewTab = () => ({
   type: "CREATE_NEW_TAB" // <-- action.type
 })
@@ -38,11 +46,16 @@ export const updateNewItemValue = (value) => ({
 // REDUCERS -- reducers.js
 export const reducers = (state = initialState, action) => {
   switch (action.type) {
-    // case "RETRIEVE_TASKS":
-    //   console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
-    //   console.log(" -- REDUCER -- RETRIEVE_TASKS | state: ", state)
-    //   console.log(" -- REDUCER -- RETRIEVE_TASKS | action", action)
-    //   return state.tasks
+
+
+    case "UPDATE_TASKS_LIST":
+      console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
+      console.log(" -- REDUCER -- UPDATE_TASKS_LIST | state: ", state)
+      console.log(" -- REDUCER -- UPDATE_TASKS_LIST | action", action)
+      return {
+        ...state,
+        tasks: action.tasks
+      }
 
     case "CREATE_NEW_TAB":
       console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
@@ -51,7 +64,7 @@ export const reducers = (state = initialState, action) => {
       id++
       return {
         ...state,
-        tasks: [...state.tasks, { id, title: state.newTabValue }],
+        tasks: [...state.tasks, { id, title: state.newTabValue, items:[] }],
         newTabValue: "" // reset "Add New Tab" input box
       }
 
@@ -60,11 +73,33 @@ export const reducers = (state = initialState, action) => {
       console.log(" -- REDUCER -- CREATE_NEW_ITEM | state: ", state)
       console.log(" -- REDUCER -- CREATE_NEW_ITEM | action", action)
       id++
+      console.log("PRE-CHANGE, state: ", state);
+      console.log("PRE-CHANGE, state.newItemValue: ", state.newItemValue);
+      let updatedObject;
       return {
         ...state,
-        tasks: [...state.tasks, { id, items: state.newItemValue }],
-        newItemValue: "" // reset "Add New Item" input box
+        tasks: [ ...state.tasks.map( (task) => {
+          if ( task.id === state.profileToView.id){
+            updatedObject = { ...task, items: [...task.items, state.newItemValue]};
+            return { ...task, items: [...task.items, state.newItemValue]}
+          }
+          return task;
+        })],
+        newItemValue: "", // reset "Add New Item" input box
+        profileToView: updatedObject
+
       }
+      
+      // return {
+      //   ...state,
+      //   tasks: [ ...state.tasks.map( (task) => {
+      //     if ( task.id === state.profileToView.id){
+      //       return { ...task, items: [...task.items, state.newItemValue]}
+      //     }
+      //     return task;
+      //   })],
+      //   newItemValue: "" // reset "Add New Item" input box
+      // }
 
     case "VIEW_PROFILE":
       console.log(" -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
