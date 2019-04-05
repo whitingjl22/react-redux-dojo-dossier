@@ -11,67 +11,34 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + "./../react-app/build/"))
 
-// GET Products
-app.get("/api/products", (request, response) => {
+// GET Tasks
+app.get("/api/tasks", (request, response) => {
   axios
-    .get("http://5c992ab94236560014393239.mockapi.io/products")
-    .then((productsGetResponse) => {
-      return response.json(productsGetResponse.data)
+    .get("http://5c992ab94236560014393239.mockapi.io/tasks")
+    .then((tasksGetResponse) => {
+      return response.json(tasksGetResponse.data)
     })
     .catch((error) => {
       console.log(error)
     })
 })
 
-// POST Product
-app.post("/api/products/add", (request, response) => {
+// GET And PUT Individual Task
+app.put("/api/tasks/:id", (request, response) => {
   axios
-    .post("http://5c992ab94236560014393239.mockapi.io/products", request.body)
+    .get(`http://5c992ab94236560014393239.mockapi.io/tasks/${request.params.id}`)
     .then((mockApiResponse) => {
-      console.log(mockApiResponse)
-      return response.json(mockApiResponse.data)
+      return axios
+        .put(`http://5c992ab94236560014393239.mockapi.io/tasks/${request.params.id}`, {
+          items: [...mockApiResponse.data.items, request.body.value]
+        })
+        .then((mockApiPutResponse) => {
+          // console.log("mockApiPutResponse", mockApiPutResponse)
+          response.json(mockApiPutResponse.data)
+        })
+        .catch((err) => console.log(err))
     })
-    .catch((error) => {
-      console.log(error)
-    })
-})
-
-// DELETE Product
-app.delete("/api/products/delete/:id", (request, response) => {
-  axios
-    .delete(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`)
-    .then((mockApiResponse) => {
-      console.log(`Delete Product ${request.params.id}`)
-      return response.json({ status: true })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-})
-
-// PUT Product
-app.put("/api/products/update/:id", (request, response) => {
-  axios
-    .put(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`, request.body)
-    .then((mockApiResponse) => {
-      console.log(`PUT Product ${request.params.id}`)
-      return response.json({ status: true })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-})
-
-// GET Individual Product Data
-app.get("/api/products/:id", (request, response) => {
-  axios
-    .get(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`)
-    .then((mockApiResponse) => {
-      return response.json(mockApiResponse.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch((err) => console.log(err))
 })
 
 app.get("*", (request, response) => {

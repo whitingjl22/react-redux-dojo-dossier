@@ -6,10 +6,6 @@ import axios from "axios"
 import "./TabList.css"
 
 class TabList extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.props.retrieveTasksFromServer()
   }
@@ -43,9 +39,14 @@ const mapStateToProps = (state) => ({
 // v1 -- NO helper file needed...
 const mapDispatchToProps = (dispatch) => ({
   retrieveTasksFromServer: () => {
-    axios.get(`http://5c992ab94236560014393239.mockapi.io/tasks`).then((response) => {
-      dispatch(updateTasksList(response.data))
-    })
+    axios
+      .get("http://localhost:4000/api/tasks")
+      .then((response) => {
+        dispatch(updateTasksList(response.data))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
   viewProfile: (id) => dispatch(viewProfile(id))
 })

@@ -30,14 +30,22 @@ const mapDispatchToProps = (dispatch) => ({
   handleSubmit: () => dispatch(createNewItem()),
 
   postItemToServer: (value, id) => {
-    axios.get(`http://5c992ab94236560014393239.mockapi.io/tasks/${id}`).then((tasksGetResponse) => {
-      console.log("tasksGetResponse:", tasksGetResponse.data)
-      axios
-        .put(`http://5c992ab94236560014393239.mockapi.io/tasks/${id}`, { items: [...tasksGetResponse.data.items, value] })
-        .then((response) => {
-          dispatch(createNewItem(response.data))
-        })
-    })
+    // axios.get(`http://5c992ab94236560014393239.mockapi.io/tasks/${id}`).then((tasksGetResponse) => {
+    //   console.log("tasksGetResponse:", tasksGetResponse.data)
+
+    axios
+      .put(`http://localhost:4000/api/tasks/${id}`, { value: value })
+      .then((response) => {
+        console.log("POST ITEM TO SERVER RESPONSE:", response.data)
+        dispatch(createNewItem())
+      })
+      .catch((err) => console.log(err))
+    console.log("AddItem.js > postItemToServer, after axios request")
+    // axios
+    //   .put(`http://5c992ab94236560014393239.mockapi.io/tasks/${id}`, { items: [...tasksGetResponse.data.items, value] })
+    //   .then((response) => {
+    //     dispatch(createNewItem(response.data))
+    //   })
   }
 })
 
