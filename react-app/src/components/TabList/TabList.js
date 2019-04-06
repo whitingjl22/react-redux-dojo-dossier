@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { viewProfile, updateTasksList } from "../../redux"
-import { retrieveTasksPromise } from "../../helper"
+// import { retrieveTasksPromise } from "../../helper"
 import axios from "axios"
 import "./TabList.css"
 
